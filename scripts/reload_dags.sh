@@ -1,0 +1,1 @@
+docker compose exec -f docker airflow  airflow dags reserialize
