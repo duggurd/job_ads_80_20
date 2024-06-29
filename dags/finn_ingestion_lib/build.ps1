@@ -1,0 +1,1 @@
+python -m build dags/finn_ingestion_lib

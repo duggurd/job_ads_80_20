@@ -1,7 +1,7 @@
 services:
   postgres:
     container_name: finn-job-ads-postgres
-    build: .
+    image: postgres:alpine
     pull_policy: always
     ports:
       - "5432:5432"
@@ -9,6 +9,7 @@ services:
       - POSTGRES_PASSWORD=321
     volumes:
       - postgres-data:/var/lib/postgresql/data
+      - ./setup.sql:/docker-entrypoint-initdb.d/setup.sql
 
   airflow:
     container_name: finn-job-ads-airflow

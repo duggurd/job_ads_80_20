@@ -1,1 +1,1 @@
-docker compose exec -f docker airflow  airflow dags reserialize
+docker compose -f ../docker/compose.yml exec airflow airflow dags reserialize 

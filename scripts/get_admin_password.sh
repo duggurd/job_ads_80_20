@@ -1,0 +1,1 @@
+docker compose -f ../docker/compose.yml exec airflow cat /opt/airflow/standalone_admin_password.txt

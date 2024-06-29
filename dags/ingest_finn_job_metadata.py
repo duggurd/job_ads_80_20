@@ -1,10 +1,9 @@
 from airflow.decorators import dag, task
 from datetime import datetime
-from finn_ingestion_lib import get_ads_metadata, get_ads_content
+
 # if os.environ.get("ENVIRONMENT") == "development":
 #     from requests_cache import install_cache, NEVER_EXPIRE
 #     install_cache(expire_after=NEVER_EXPIRE)
-
 
 @dag(
     dag_id="finn_ads_ingestion", 
