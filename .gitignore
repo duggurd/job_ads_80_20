@@ -2,7 +2,7 @@
 data
 __pycache__
 http_cache.sqlite
-*.env
+*.env*
 *.ipynb
 *.terraform
 *.tfstate
