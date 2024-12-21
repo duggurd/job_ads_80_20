@@ -2,7 +2,7 @@ let
   pkgs = import <nixpkgs> {};
 in pkgs.mkShell {
   packages = [
-    (pkgs.python312.withPackages(ps: [
+    (pkgs.python311.withPackages(ps: [
       ps.sqlalchemy
       ps.pandas
       ps.beautifulsoup4
@@ -10,6 +10,11 @@ in pkgs.mkShell {
       ps.pgcli
       ps.psycopg2
       ps.requests-cache
+      ps.build
+      ps.ipykernel
+      ps.ipython
+      ps.jupyter
+      ps.notebook
     ]))
   ];
 }

@@ -8,7 +8,7 @@ import requests
 from bs4 import BeautifulSoup as bs
 
 def get_sqlalchemy_conn():
-    connection_string = os.environ["CONN_INGESTION_DB"]
+    connection_string = "postgresql+psycopg2://postgres:123@homelab.kiko-ghoul.ts.net:30432/ingestion_db"
     return sqlalchemy.create_engine(connection_string).connect()
 
 def get_ads_metadata(occupation=None, published:str="1"):
@@ -25,14 +25,15 @@ def get_ads_metadata(occupation=None, published:str="1"):
         for page in range(1, paging["last"] + 1):
             data = get_finn_metdata_page(page, occupation, published)
             df = pd.concat([df, pd.DataFrame(data["docs"])])
-    print(df.head())
+    
+
     if "coordinates" in df.columns:
         df["longitude"] = df["coordinates"].apply(lambda x: x.get("lon"))
         df["latitude"] =  df["coordinates"].apply(lambda x: x.get("lat")) 
     
     df["created_at"] = datetime.now()
 
-    df = df.drop(columns=["coordinates", "logo", "labels", "flags", "image", "extras"])
+    df = df.drop(columns=["coordinates", "logo", "labels", "flags", "image", "extras"], errors="ignore")
 
     df["timestamp"] = pd.to_datetime(df["timestamp"])
     df["published"] = pd.to_datetime(df["published"])
@@ -73,8 +74,7 @@ def get_ads_content():
         SELECT canonical_url, id 
         FROM finn.finn_job_ads__metadata AS metadata 
         WHERE
-            canonical_url ilike '%position%'
-            and metadata.id not in (
+            metadata.id not in (
                 select id 
                 from finn.finn_job_ads__content
             );
